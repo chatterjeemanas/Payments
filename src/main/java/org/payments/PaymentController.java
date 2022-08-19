@@ -46,6 +46,7 @@ public class PaymentController {
         while (!in.hasNext("quit")) {
             processScan(in);
         }
+        in.close();
     }
 
 
