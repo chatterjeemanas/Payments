@@ -30,14 +30,13 @@ public class PaymentController {
 
     public void generateFileAndProcess(String filePath) {
 
-        try {
-            File file = new File(filePath);
-            FileInputStream fileStream = new FileInputStream(file);
-            BufferedInputStream bufferStream = new BufferedInputStream(fileStream);
+        try(BufferedInputStream bufferStream = new BufferedInputStream(new FileInputStream(new File(filePath)))) {
             getFileInputAndProcess(bufferStream);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             System.out.println("Exception inside generateFile:" + ex.toString());
         }
+
 
 
     }
@@ -55,6 +54,8 @@ public class PaymentController {
         while (in.hasNextLine()) {
             processScan(in);
         }
+
+        in.close();
     }
 
     private void processScan(Scanner in) {
